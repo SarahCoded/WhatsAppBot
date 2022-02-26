@@ -5,7 +5,7 @@ from bs4 import BeautifulSoup
 
 app = Flask(__name__)
 
-@app.route('/')
+@app.route('/') # Check app is working
 def hello():
     return "Hello World"
 
@@ -19,8 +19,7 @@ def bot():
     acceptableChars = "abcdefghijklmnopqrstuvwxyz? -"
     for char in incoming_msg:
         if not char in acceptableChars:
-            greeting = "Hello! I am the crossword bot \U0001F916\n-> Send me a word and I'll find the definition.\n-> Or give me a partial word in the form s??d and I'll fill in the blanks!"
-            msg.body(greeting)
+            msg.body("Hello! I am the crossword bot \U0001F916\n-> Send me a word and I'll find the definition.\n-> Or give me a partial word in the form s??d and I'll fill in the blanks!")
             return str(resp)
     # Fix formatting for url string, replace unknown letters with _'s
     stringQuery = incoming_msg.replace('?', '_').replace(' ', '_')
@@ -39,7 +38,7 @@ def bot():
                 reply = reply + str(count) + '. ' + li.text + '\n'
             msg.body(reply)
         return str(resp)
-    else: # Find words that fit in from the blanks given
+    else: # Find words that fit in from the blanks given i.e. s??w
         results = soup.select("div[class*=word]")
         if not results:
             msg.body("No matching words were found. Maybe you put in an incorrect answer...")
